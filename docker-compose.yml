@@ -71,20 +71,5 @@ services:
       - DB_HOST=konga-database
       - DB_PORT=27017
       - DB_DATABASE=konga
-  grafana:
-    image: grafana/grafana
-    networks:
-      - kong-net
-    ports:
-      - "3000:3000"
-  prometheus:
-    image: prom/prometheus
-    volumes:
-      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
-    networks:
-      - kong-net
-    ports:
-      - "9090:9090"
-
 networks:
   kong-net:
