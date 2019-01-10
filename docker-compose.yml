@@ -17,19 +17,6 @@ services:
     restart: always
     stdin_open: true
     tty: true
-  kong-migrations:
-    image: kong:latest
-    networks:
-      - kong-net
-    depends_on:
-      - kong-database
-    environment:
-      - KONG_DATABASE=postgres
-      - KONG_PG_HOST=${KONG_PG_HOST:-kong-database}
-      - KONG_PG_USER=${KONG_PG_USER:-kong}
-      - KONG_PG_PASSWORD=${KONG_PG_PASSWORD:-kong}
-      - KONG_CASSANDRA_CONTACT_POINTS=kong-database
-    command: kong migrations up
   kong:
     image: kong:latest
     ports:
@@ -56,21 +43,6 @@ services:
     image: mongo:latest
     networks:
       - kong-net
-  konga:
-    image: pantsel/konga:0.13.0
-    ports:
-      - "1337:1337"
-    networks:
-      - kong-net
-    depends_on:
-      - konga-database
-    environment:
-      - NODE_ENV=production
-      - TOKEN_SECRET=konga
-      - DB_ADAPTER=mongo
-      - DB_HOST=konga-database
-      - DB_PORT=27017
-      - DB_DATABASE=konga
   kong-dashboard:
     image: pgbi/kong-dashboard:v2
     ports:
