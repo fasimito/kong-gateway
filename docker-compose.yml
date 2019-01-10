@@ -26,8 +26,8 @@ services:
       - "8444:8444"
     networks:
       - kong-net
-    depends_on:
-      - kong-database
+    links:
+      - db:kong-database
     environment:
       - KONG_DATABASE=postgres
       - KONG_PG_HOST=${KONG_PG_HOST:-kong-database}
@@ -41,10 +41,6 @@ services:
       - KONG_PROXY_ERROR_LOG=/dev/stderr
     restart: always
     command: kong migrations up
-  konga-database:
-    image: mongo:latest
-    networks:
-      - kong-net
   kong-dashboard:
     image: pgbi/kong-dashboard:v2
     ports:
