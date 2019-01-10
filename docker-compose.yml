@@ -71,5 +71,13 @@ services:
       - DB_HOST=konga-database
       - DB_PORT=27017
       - DB_DATABASE=konga
+  kong-dashboard:
+    image: pgbi/kong-dashboard:v2
+    ports:
+      - "8080:8080"
+    networks:
+      - kong-net
+    depends_on:
+      - kong
 networks:
   kong-net:
