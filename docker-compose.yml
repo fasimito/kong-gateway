@@ -39,6 +39,7 @@ services:
       - KONG_PROXY_ACCESS_LOG=/dev/stdout
       - KONG_PROXY_ERROR_LOG=/dev/stderr
     restart: always
+    command: kong migrations up
   konga-database:
     image: mongo:latest
     networks:
