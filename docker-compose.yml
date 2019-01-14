@@ -2,7 +2,7 @@ version: "3"
 
 services:
   kong-database:
-    image: postgres:9.6
+    image: postgres:11
     networks:
       - kong-net
     environment:
@@ -24,6 +24,7 @@ services:
       - kong-net
     depends_on:
       - kong-database
+
     environment:
       - KONG_DATABASE=postgres
       - KONG_PG_HOST=${KONG_PG_HOST:-kong-database}
@@ -43,6 +44,8 @@ services:
       - kong-net
     depends_on:
       - kong-database
+    command: >
+      sh -c "kong migrations up && sh /docker-entrypoint.sh kong docker-start"
     environment:
       - KONG_DATABASE=postgres
       - KONG_PG_HOST=${KONG_PG_HOST:-kong-database}
