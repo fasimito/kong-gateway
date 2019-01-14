@@ -18,21 +18,6 @@ services:
     stdin_open: true
     tty: true
 
-  kong-migrations:
-    image: kong:latest
-    networks:
-      - kong-net
-    depends_on:
-      - kong-database
-
-    environment:
-      - KONG_DATABASE=postgres
-      - KONG_PG_HOST=${KONG_PG_HOST:-kong-database}
-      - KONG_PG_USER=${KONG_PG_USER:-kong}
-      - KONG_PG_PASSWORD=${KONG_PG_PASSWORD:-kong}
-      - KONG_CASSANDRA_CONTACT_POINTS=kong-database
-    command: kong migrations up
-
   kong:
     image: kong:latest
     ports:
