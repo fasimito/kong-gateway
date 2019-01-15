@@ -102,7 +102,7 @@ services:
       - kong-database
       - consulserver
     command: >
-      sh -c "kong migrations up && sh /docker-entrypoint.sh kong docker-start"
+      sh -c "kong migrations up && kong migrations bootstrap && sh /docker-entrypoint.sh kong docker-start"
     environment:
       - KONG_DATABASE=postgres
       - KONG_PG_HOST=${KONG_PG_HOST:-kong-database}
