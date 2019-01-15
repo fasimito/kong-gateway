@@ -61,6 +61,7 @@ services:
       - kong-net
   serviceweb:
     image: fasimito/node-microservice-web
+    hostname: serviceweb
     depends_on:
       - "consulserver"
     environment:
@@ -89,6 +90,7 @@ services:
 
   kong:
     image: kong:latest
+    hostname: kong
     ports:
       - "8000:8000"
       - "8001:8001"
@@ -116,6 +118,7 @@ services:
 
   kong-dashboard:
     image: pgbi/kong-dashboard:v2
+    hostname: kong-dashboard
     ports:
       - "8080:8080"
     networks:
