@@ -9,6 +9,8 @@ services:
       - "8300"
       - "8400"
       - "8500:8500"
+      - "8600:8600"
+      - "8600:8600/udp"
       - "53"
     command: -server -ui-dir /ui -data-dir /tmp/consul --bootstrap-expect=2
     networks:
@@ -24,6 +26,8 @@ services:
       - "8300"
       - "8400"
       - "8500"
+      - "8600"
+      - "8600/udp"
       - "53"
     command: -server -data-dir /tmp/consul -join consulserver
     networks:
@@ -38,6 +42,8 @@ services:
       - "8300"
       - "8400"
       - "8500"
+      - "8600"
+      - "8600/udp"
       - "53"
     command: -server -data-dir /tmp/consul -join consulserver
     networks:
@@ -92,6 +98,7 @@ services:
       - kong-net
     depends_on:
       - kong-database
+      - consulserver
     command: >
       sh -c "kong migrations up && sh /docker-entrypoint.sh kong docker-start"
     environment:
@@ -105,6 +112,7 @@ services:
       - KONG_ADMIN_LISTEN_SSL= 0.0.0.0:8444
       - KONG_PROXY_ACCESS_LOG=/dev/stdout
       - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_DNS_RESOLVER=10.8.240.246:8600
     restart: always
 
   kong-dashboard:
