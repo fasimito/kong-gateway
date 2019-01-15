@@ -112,8 +112,7 @@ services:
       - KONG_ADMIN_LISTEN_SSL= 0.0.0.0:8444
       - KONG_PROXY_ACCESS_LOG=/dev/stdout
       - KONG_PROXY_ERROR_LOG=/dev/stderr
-      - KONG_DNS_RESOLVER=10.8.240.246:8600
-    restart: always
+    restart: on-failure
 
   kong-dashboard:
     image: pgbi/kong-dashboard:v2
